@@ -1,59 +1,50 @@
 #include "shell.h"
 
 /**
- * failed_split - function that exit the program when split function
- * failed
- * @line: string that need to be free before exit
- *
- */
-void failed_split(char *line)
-{
-	free(line);
-	write(STDOUT_FILENO, "Error 1\n", 8);
-	exit(1);
-}
-/**
  * failed_getline - function that exit the program when getline failed
- *
+ * @line: string containing the input line
  */
-void failed_getline(void)
+void failed_getline(char *line)
 {
-	write(STDOUT_FILENO, "Error with getline\n", 19);
+	if (line == NULL)
+	{}
+	writErr("Error with getline\n");
 	exit(1);
 }
 /**
  * failed_fork - function that exit the program when fork failed
- * @line: string to free
- * @args: array of string to free
+ * @path: string that contains the route of the command
+ * @args: array of string that contins the arguments
+ * @status: previos status
  *
  */
-void failed_fork(char *line, char **args)
+void failed_fork(char *path, char **args, int *status)
 {
-	free(line);
+	int aux = 0;
+
+	free(path);
 	free_grid(args, grid_size(args));
-	write(STDOUT_FILENO, "Error with fork\n", 16);
-	exit(1);
-}
-/**
- * failed_path_exist - function that exit the program when command has
- *  not been found
- *
- */
-void failed_path_exist(void)
-{
-	write(STDOUT_FILENO, "command not found\n", 18);
+	writErr("Error with fork\n");
+	aux = *status, free(status), exit(aux);
 }
 /**
  * failed_exec - function that exit the program when execve failed
  * @line: string to free
  * @path: string to free
  * @args: array of string to free
+ * @command_num: number of command introduced in the shell
+ * @program_name: program name shell
  *
  */
-/*void failed_exec(char *line, char **args)*/
-void failed_exec(char *line, char *path, char **args)
+void failed_exec(char *line, char *path, char **args,
+		size_t command_num, char *program_name)
 {
-	write(STDOUT_FILENO, "command not found\n", 18);
+	writErr(program_name);
+	writErr(": ");
+	print_num_Error((int)command_num);
+	writErr(": ");
+	writErr(args[0]);
+	writErr(": Failed to execute\n");
 	free(args);
 	free(path);
 	free(line);
