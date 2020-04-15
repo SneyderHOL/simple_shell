@@ -17,30 +17,45 @@ void free_grid(char **grid, int height)
 * split_a - function to split the capture line
 * @line: captured string
 * @lineSize: size of line variable
+* @num_line: num times
+* @pro_name: program name shell
+* @status: status exit
 *
 * Return: char pointer array with each argument
 */
-char **split_a(char *line, ssize_t lineSize)
+char **split_a(char *line, ssize_t lineSize, size_t num_line, char *pro_name,
+		int *status)
 {
-	ssize_t i = 0;
-	int spaces = 0;
-	char **array = NULL, *aux = NULL, *delim = " ";
+	int spaces = 0, i = 0;
+	char **array = NULL, *aux = NULL, delim[] = {' ', 9, '\0'};
 
-	valid_exit(line);
+	if (valid_exit(line, num_line, pro_name, status) == 2)
+		return (NULL);
 	_strenv(line);
-	for (; i < lineSize; i++)
-		if (line[i] == *delim)
-			spaces++;
+	spaces = counter_space(line, lineSize, delim);
 	spaces += 2;
-	array = malloc((spaces) * sizeof(char *));
-	aux = strtok(line, delim);
-	for (i = 0; aux; i++)
+	array = malloc(sizeof(char *) * spaces);
+	if (array == NULL)
 	{
+		writErr("failed memory allocator\n");
+		return (NULL);
+	}
+	aux = strtok(line, delim);
+	for (i = 0; aux;)
+	{
+		if (aux[0] == '\n')
+		{
+			aux = strtok(NULL, delim);
+			continue;
+		}
 		array[i] = aux;
 		clean(array[i]);
+		i++;
 		aux = strtok(NULL, delim);
 	}
-	array[i] = aux;
+	array[i] = NULL;
+	if (array[0] == NULL)
+		free(array), array = NULL;
 	return (array);
 }
 /**
@@ -57,7 +72,6 @@ int grid_size(char **grid)
 	for (a = 0; grid[a]; a++)
 	{
 	}
-	printf("%i,", a);
 	return (a);
 }
 /**
@@ -71,6 +85,27 @@ void print_array(char **a, int n)
 	int i;
 
 	for (i = 0; i < n; i++)
-		printf("%s,", a[i]);
-	printf("\n");
+		_writ(a[i]);
+	_putchar(10);
+}
+/**
+ * list_to_array - function to copy the strings in a list_t into a array of
+ * strings
+ * @head: pointer to the head of the list
+ * @array: array of strings
+ * @size: size of the array
+ *
+ */
+void list_to_array(list_t *head, char **array, size_t size)
+{
+	size_t i = 0;
+	char *str = NULL;
+	list_t *aux = head;
+
+	for (; i < size; i++)
+	{
+		str = _strdup(aux->str);
+		array[i] = str;
+		aux = aux->next;
+	}
 }
