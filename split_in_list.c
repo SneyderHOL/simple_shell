@@ -13,8 +13,6 @@ list_t *split_l(char *line, ssize_t lineSize, char *delim)
 	char *aux = NULL;
 	list_t *head = NULL;
 
-	if (_strcmp(line, "exit 98\n") == 0)
-		free(line), exit(98);
 	if (line == NULL || lineSize <= 0)
 		return (NULL);
 	aux = strtok(line, delim);
@@ -84,7 +82,6 @@ size_t print_list(list_t *h)
 {
 	unsigned int size = 0;
 	char *s = NULL;
-	unsigned int length = 0;
 	const list_t *iter = NULL;
 
 	if (h == NULL)
@@ -93,11 +90,35 @@ size_t print_list(list_t *h)
 	while (iter != NULL)
 	{
 		s = iter->str;
-		length = iter->len;
 		if (s == NULL)
-			printf("[0] (nil)\n");
+			_writ("[0] (nil)\n");
 		else
-			printf("[%u] %s\n", length, s);
+		{
+			_writ(s);
+			_putchar(10);
+		}
+		size++;
+		iter = iter->next;
+	}
+	return (size);
+}
+/**
+ * list_len - function that returns the number of elements in a
+ * linked list_t list.
+ * @h: list_t pointer argument
+ *
+ * Return: the number of nodes
+ */
+size_t list_len(list_t *h)
+{
+	unsigned int size = 0;
+	list_t *iter = NULL;
+
+	if (h == NULL)
+		return (0);
+	iter = h;
+	while (iter != NULL)
+	{
 		size++;
 		iter = iter->next;
 	}

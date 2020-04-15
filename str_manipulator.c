@@ -48,7 +48,10 @@ char *_strdup(char *str)
 	j++;
 	poin = malloc(j * sizeof(char));
 	if (poin == NULL)
+	{
+		writErr("failed memory allocator\n");
 		return (NULL);
+	}
 	for (i = 0; i < j; i++)
 		*(poin + i) = *(str + i);
 	return (poin);
@@ -88,7 +91,10 @@ char *str_concat(char *s1, char *s2)
 	s2_len = _strlen(s2);
 	poin = malloc((s1_len + s2_len + 1) * sizeof(char));
 	if (poin == NULL)
+	{
+		writErr("failed memory allocator\n");
 		return (NULL);
+	}
 	for (a = 0; a < s1_len; a++)
 		*(poin + a) = *(s1 + a);
 	for (b = 0; b < s2_len; b++, a++)
