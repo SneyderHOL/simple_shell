@@ -31,7 +31,6 @@ char **split_a(char *line, ssize_t lineSize, size_t num_line, char *pro_name,
 
 	if (valid_exit(line, num_line, pro_name, status) == 2)
 		return (NULL);
-	_strenv(line);
 	spaces = counter_space(line, lineSize, delim);
 	spaces += 2;
 	array = malloc(sizeof(char *) * spaces);

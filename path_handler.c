@@ -77,43 +77,45 @@ list_t *split_path(char *args, size_t num, char *program_name)
  * Return: the path of the command if has been found, NULL otherwise
  */
 
-char *handle_path(char *command, size_t command_num, char *program_name,
-	int *statusP)
+char *handle_path(char **command, size_t command_num, char *program_name,
+		  int *statusP)
 {
 	list_t *paths = NULL, *aux = NULL;
 	char *found = NULL, *add_slash = NULL;
 	int status = -1;
 
-	status = check_for_file(command);
+	if (_strenv(command, statusP) != 0)
+		return (NULL);
+	status = check_for_file(command[0]);
 	if (status == 0)
-		return (_strdup(command));
+		return (_strdup(command[0]));
 	else if (status == 1 || status == 2)
 	{
-		failed_permissions(command, command_num, program_name),
+		failed_permissions(command[0], command_num, program_name),
 			*statusP = 126;
 		return (NULL);
 	}
-	if (dot_slash_compare(command) > 0)
+	if (dot_slash_compare(command[0]) > 0)
 	{
-		failed_command_noexist(command, command_num, program_name),
+		failed_command_noexist(command[0], command_num, program_name),
 			*statusP = 127;
 		return (NULL);
 	}
-	paths = split_path(command, command_num, program_name);
+	paths = split_path(command[0], command_num, program_name);
 	if (paths == NULL)
 	{
-		failed_command_noexist(command, command_num, program_name),
+		failed_command_noexist(command[0], command_num, program_name),
 			*statusP = 127;
 		return (NULL);
 	}
-	aux = paths, add_slash = str_concat("/", command);
+	aux = paths, add_slash = str_concat("/", command[0]);
 	if (add_slash == NULL)
 		aux = NULL;
 	find_command_in_path(aux, &found, add_slash, &status);
-	if (is_command_found(found, command, command_num, program_name, status) < 0)
+	if (is_command_found(found, command[0], command_num, program_name, status) < 0)
 	{
-		failed_command_noexist(command, command_num, program_name),
-		free(add_slash), free_list(paths), *statusP = 127;
+		failed_command_noexist(command[0], command_num, program_name),
+			free(add_slash), free_list(paths), *statusP = 127;
 		return (NULL);
 	}
 	free(add_slash);
@@ -130,7 +132,7 @@ char *handle_path(char *command, size_t command_num, char *program_name,
  *
  */
 void find_command_in_path(list_t *aux, char **found, char *add_slash,
-			int *status)
+			  int *status)
 {
 	while (aux != NULL)
 	{
@@ -157,7 +159,7 @@ void find_command_in_path(list_t *aux, char **found, char *add_slash,
  *
  */
 int is_command_found(char *found, char *command, size_t command_num,
-	char *program_name, int status)
+		     char *program_name, int status)
 {
 	if (status != 0)
 	{
