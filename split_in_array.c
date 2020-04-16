@@ -88,24 +88,3 @@ void print_array(char **a, int n)
 		_writ(a[i]);
 	_putchar(10);
 }
-/**
- * list_to_array - function to copy the strings in a list_t into a array of
- * strings
- * @head: pointer to the head of the list
- * @array: array of strings
- * @size: size of the array
- *
- */
-void list_to_array(list_t *head, char **array, size_t size)
-{
-	size_t i = 0;
-	char *str = NULL;
-	list_t *aux = head;
-
-	for (; i < size; i++)
-	{
-		str = _strdup(aux->str);
-		array[i] = str;
-		aux = aux->next;
-	}
-}
