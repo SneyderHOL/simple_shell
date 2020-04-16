@@ -24,8 +24,8 @@ void print_env(void)
  * _strenv - function than validate if a strings is equals to env and print
  * @args: array of strings with the arguments
  * @status: int that keeps the error number
- *
- **/
+ * Return: if not print env zero or onr if print
+ */
 int _strenv(char **args, int *status)
 {
 	int aux = 0;

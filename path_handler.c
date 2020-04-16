@@ -78,15 +78,14 @@ list_t *split_path(char *args, size_t num, char *program_name)
  */
 
 char *handle_path(char **command, size_t command_num, char *program_name,
-		  int *statusP)
+		int *statusP)
 {
 	list_t *paths = NULL, *aux = NULL;
 	char *found = NULL, *add_slash = NULL;
-	int status = -1;
+	int status = check_for_file(command[0]);
 
 	if (_strenv(command, statusP) != 0)
 		return (NULL);
-	status = check_for_file(command[0]);
 	if (status == 0)
 		return (_strdup(command[0]));
 	else if (status == 1 || status == 2)
@@ -112,14 +111,14 @@ char *handle_path(char **command, size_t command_num, char *program_name,
 	if (add_slash == NULL)
 		aux = NULL;
 	find_command_in_path(aux, &found, add_slash, &status);
-	if (is_command_found(found, command[0], command_num, program_name, status) < 0)
+	if (is_command_found(found, command[0], command_num, program_name,
+			status) < 0)
 	{
 		failed_command_noexist(command[0], command_num, program_name),
 			free(add_slash), free_list(paths), *statusP = 127;
 		return (NULL);
 	}
-	free(add_slash);
-	free_list(paths);
+	free(add_slash), free_list(paths);
 	return (found);
 }
 
