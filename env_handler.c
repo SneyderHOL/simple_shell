@@ -9,8 +9,10 @@ void print_env(void)
 	int i = 0;
 
 	if (ENV == NULL)
-		return;
-/*  Devuelve error, imprime error? */
+	{
+		write(STDOUT_FILENO, "nil", 3);
+		write(STDOUT_FILENO, "\n", 1);
+	}
 
 	for (i = 0; ENV[i]; i++)
 	{
