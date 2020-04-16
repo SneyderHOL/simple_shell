@@ -69,53 +69,53 @@ list_t *split_path(char *args, size_t num, char *program_name)
 }
 /**
  * handle_path - function that handle the PATH environment variable
- * @command: command to find the PATH list_t
- * @command_num: number of secuence
- * @program_name: program name shell
- * @statusP: previos status
+ * @comd: command to find the PATH list_t
+ * @com_num: number of secuence
+ * @prog_name: program name shell
+ * @stat: previos status
  *
  * Return: the path of the command if has been found, NULL otherwise
  */
 
-char *handle_path(char **command, size_t command_num, char *program_name,
-		int *statusP)
+char *handle_path(char **comd, size_t com_num, char *prog_name,
+		int *stat)
 {
 	list_t *paths = NULL, *aux = NULL;
 	char *found = NULL, *add_slash = NULL;
-	int status = check_for_file(command[0]);
+	int status = 0;
 
-	if (_strenv(command, statusP) != 0)
+	if (_strenv(comd, stat) != 0)
 		return (NULL);
+	status = check_for_file(comd[0]);
 	if (status == 0)
-		return (_strdup(command[0]));
+		return (_strdup(comd[0]));
 	else if (status == 1 || status == 2)
 	{
-		failed_permissions(command[0], command_num, program_name),
-			*statusP = 126;
+		failed_permissions(comd[0], com_num, prog_name), *stat = 126;
 		return (NULL);
 	}
-	if (dot_slash_compare(command[0]) > 0)
+	if (dot_slash_compare(comd[0]) > 0)
 	{
-		failed_command_noexist(command[0], command_num, program_name),
-			*statusP = 127;
+		failed_command_noexist(comd[0], com_num, prog_name),
+			*stat = 127;
 		return (NULL);
 	}
-	paths = split_path(command[0], command_num, program_name);
+	paths = split_path(comd[0], com_num, prog_name);
 	if (paths == NULL)
 	{
-		failed_command_noexist(command[0], command_num, program_name),
-			*statusP = 127;
+		failed_command_noexist(comd[0], com_num, prog_name),
+			*stat = 127;
 		return (NULL);
 	}
-	aux = paths, add_slash = str_concat("/", command[0]);
+	aux = paths, add_slash = str_concat("/", comd[0]);
 	if (add_slash == NULL)
 		aux = NULL;
 	find_command_in_path(aux, &found, add_slash, &status);
-	if (is_command_found(found, command[0], command_num, program_name,
+	if (is_command_found(found, comd[0], com_num, prog_name,
 			status) < 0)
 	{
-		failed_command_noexist(command[0], command_num, program_name),
-			free(add_slash), free_list(paths), *statusP = 127;
+		failed_command_noexist(comd[0], com_num, prog_name),
+			free(add_slash), free_list(paths), *stat = 127;
 		return (NULL);
 	}
 	free(add_slash), free_list(paths);
