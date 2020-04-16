@@ -32,6 +32,7 @@ int check_for_file(char *command);
 void execute_command(pid_t *child, int *status, char *input_line,
 	char *command_exist, char **args, size_t command_num, char *program_name);
 void e_exit(int *eof_aux, char *str, int *status);
+int dot_slash_compare(char *command);
 /* Functions in complementary_functions.c file */
 int counter_space(char *line, ssize_t lineSize, char *delim);
 int is_empty_string(char *line, ssize_t lineSize);
