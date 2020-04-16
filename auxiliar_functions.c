@@ -91,7 +91,7 @@ void e_exit(int *eof_aux, char *str, int *status)
 	}
 }
 /**
- * dot_slash_compare - function that validate if a string have a 
+ * dot_slash_compare - function that validate if a string have a
  * @command: string to operate
  *
  * Return: 1 if have a special character, 0 otherwise
