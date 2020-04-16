@@ -22,19 +22,31 @@ void print_env(void)
 }
 /**
  * _strenv - function than validate if a strings is equals to env and print
- * @s1: string input
+ * @args: array of strings with the arguments
+ * @status: int that keeps the error number
+ *
  **/
-void _strenv(char *s1)
+int _strenv(char **args, int *status)
 {
-	char *env = "env";
-	int i = 1;
+	int aux = 0;
 
-	for (; (*s1 != '\0' && *env != '\0') && *s1 == *env; s1++, i++)
+	if (args == NULL)
+		return (aux);
+	if (_strcmp(args[0], "env") == 0)
 	{
-		if (i == 3 && (*s1 - *env) == 0)
+		if (args[1] == NULL)
+		{
+			aux++;
 			print_env();
-		env++;
+		}
+		else
+		{
+			aux++;
+			writErr(args[0]);
+			writErr(": ");
+			writErr(args[1]);
+			writErr(": No such file or directory\n");
+		}
 	}
-	if ((*s1 - *env) != 0)
-		return;
+	return (aux);
 }

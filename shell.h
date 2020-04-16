@@ -39,7 +39,7 @@ int is_empty_string(char *line, ssize_t lineSize);
 int is_dot(char *line, ssize_t lineSize);
 /* Functions in env_handler.c file */
 void print_env(void);
-void _strenv(char *s1);
+int _strenv(char **args, int *status);
 /* Functions in exit_handler.c file */
 int valid_exit(char *str, size_t num_sequence, char *program_name,
 		int *status);
@@ -65,7 +65,7 @@ void failed_env_noexist(char *args, size_t num, char *program_name);
 /* Functions in path_handler.c file */
 char *find_path_in_env(char *args, size_t num, char *program_name);
 list_t *split_path(char *args, size_t num, char *program_name);
-char *handle_path(char *command, size_t command_num, char *program_name,
+char *handle_path(char **command, size_t command_num, char *program_name,
 	int *status);
 void find_command_in_path(list_t *aux, char **found, char *add_slash,
 			int *status);

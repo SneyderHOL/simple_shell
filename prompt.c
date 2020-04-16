@@ -17,7 +17,7 @@ void prompt(char *program_name)
 	{
 		print_prompt();
 		line_read_char = getline(&input_line, &len_line, stdin),
-					*status = stat_ctr_c(*status), command_num++;
+			*status = stat_ctr_c(*status), command_num++;
 		if (line_checker(line_read_char, &eof_aux, &input_line, status) > 0)
 		{
 			free(input_line), input_line = NULL;
@@ -27,18 +27,18 @@ void prompt(char *program_name)
 				continue;
 		}
 		args = split_a(input_line, line_read_char, command_num, program_name,
-				status);
+			       status);
 		if (args == NULL)
 		{
 			free(input_line), input_line = NULL,
-			e_exit(&eof_aux, "($)\n", status);
+				e_exit(&eof_aux, "($)\n", status);
 			continue;
 		}
-		command_exist = handle_path(args[0], command_num, program_name, status);
+		command_exist = handle_path(args, command_num, program_name, status);
 		if (command_exist == NULL)
 		{
 			free(args), free(input_line), input_line = NULL,
-			e_exit(&eof_aux, "($)\n", status);
+				e_exit(&eof_aux, "($)\n", status);
 			continue;
 		}
 		execute_command(&child, status, input_line, command_exist, args,
@@ -58,7 +58,7 @@ void prompt(char *program_name)
  * Return: 1 if input_line is empty
  */
 int line_checker(ssize_t line_read_char, int *eof_aux, char **input_line,
-		int *status)
+		 int *status)
 {
 	int stat, aux = 0;
 
