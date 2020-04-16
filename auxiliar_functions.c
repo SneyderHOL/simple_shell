@@ -90,3 +90,29 @@ void e_exit(int *eof_aux, char *str, int *status)
 		stat = *status, free(status), exit(stat);
 	}
 }
+/**
+ * dot_slash_compare - function that validate if a string have a 
+ * @command: string to operate
+ *
+ * Return: 1 if have a special character, 0 otherwise
+ */
+int dot_slash_compare(char *command)
+{
+	int aux = 0, len = 0;
+	char c = '\0', d = '\0';
+
+	len = _strlen(command);
+	c = command[0];
+	d = command[1];
+	if (len > 2)
+	{
+		if (c == '/' || (c == '.' && d == '/'))
+			aux++;
+	}
+	else
+	{
+		if (c == '/')
+			aux++;
+	}
+	return (aux);
+}

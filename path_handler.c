@@ -93,7 +93,7 @@ char *handle_path(char *command, size_t command_num, char *program_name,
 			*statusP = 126;
 		return (NULL);
 	}
-	if (command[0] == '/')
+	if (dot_slash_compare(command) > 0)
 	{
 		failed_command_noexist(command, command_num, program_name),
 			*statusP = 127;
