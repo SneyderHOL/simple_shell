@@ -115,7 +115,9 @@ This repository contains the files for Simple Shell Project. The objective of th
 
 # Blog: What happens when you type ls -l in the shell
 
-Check out our blog, click here : [ https://www.linkedin.com/posts/juan-r-95547a192_activity-6653746840061689857-jQtH ]
+Check out our blog, click here :[ https://medium.com/@sneyd3r/what-happens-when-you-type-ls-l-in-the-shell-57fc0645706a ]
+
+Or here: [ https://www.linkedin.com/posts/juan-r-95547a192_activity-6653746840061689857-jQtH ]
 
 # Repository content
 
