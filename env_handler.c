@@ -13,11 +13,13 @@ void print_env(void)
 		write(STDOUT_FILENO, "nil", 3);
 		write(STDOUT_FILENO, "\n", 1);
 	}
-
-	for (i = 0; ENV[i]; i++)
+	else
 	{
-		write(STDOUT_FILENO, ENV[i], _strlen(ENV[i]));
-		write(STDOUT_FILENO, "\n", 1);
+		for (i = 0; ENV[i]; i++)
+		{
+			write(STDOUT_FILENO, ENV[i], _strlen(ENV[i]));
+			write(STDOUT_FILENO, "\n", 1);
+		}
 	}
 }
 /**
