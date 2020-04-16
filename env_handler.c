@@ -9,44 +9,28 @@ void print_env(void)
 	int i = 0;
 
 	if (ENV == NULL)
+		return;
+/*  Devuelve error, imprime error? */
+
+	for (i = 0; ENV[i]; i++)
 	{
-		write(STDOUT_FILENO, "nil", 3);
+		write(STDOUT_FILENO, ENV[i], _strlen(ENV[i]));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	else
-		for (i = 0; ENV[i]; i++)
-		{
-			write(STDOUT_FILENO, ENV[i], _strlen(ENV[i]));
-			write(STDOUT_FILENO, "\n", 1);
-		}
 }
 /**
  * _strenv - function than validate if a strings is equals to env and print
- * @args: array of strings with the arguments
- * @status: int that keeps the error number
- * Return: if not print env zero or onr if print
- */
-int _strenv(char **args, int *status)
+ * @s1: string input
+ **/
+void _strenv(char *s1)
 {
-	int aux = 0;
+	char *env = "env\n";
 
-	if (args == NULL)
-		return (aux);
-	if (_strcmp(args[0], "env") == 0)
+	for (; (*s1 != '\0' && *env != '\0') && *s1 == *env; s1++)
 	{
-		if (args[1] == NULL)
-		{
-			aux++;
-			print_env();
-		}
-		else
-		{
-			aux++;
-			writErr(args[0]);
-			writErr(": ");
-			writErr(args[1]);
-			writErr(": No such file or directory\n");
-		}
+		env++;
 	}
-	return (aux);
+	if ((*s1 - *env) != 0)
+		return;
+	print_env();
 }
