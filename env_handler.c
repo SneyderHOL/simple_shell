@@ -24,13 +24,24 @@ void print_env(void)
  **/
 void _strenv(char *s1)
 {
-	char *env = "env\n";
+	char *env = "env";
+	int i = 0, j = 0;
 
-	for (; (*s1 != '\0' && *env != '\0') && *s1 == *env; s1++)
+	for (; s1[i] != '\0'; i++)
 	{
-		env++;
+		if (s1[i] == 'e' || s1[i] == ' ')
+		{
+			for (j = 0; s1[i] != '\0' && env[j] != '\0' && s1[i] == env[j];)
+			{
+				if (s1[i] == 'v' && env[j] == 'v')
+				{
+					if (s1[i + 1] == '\n' || s1[i + 1] == ' ')
+						print_env();
+				}
+				j++, i++;
+			}
+		}
+		else if (s1[i] != 32 || s1[i] != 'e')
+			return;
 	}
-	if ((*s1 - *env) != 0)
-		return;
-	print_env();
 }
