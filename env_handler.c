@@ -7,6 +7,7 @@
 void print_env(void)
 {
 	int i = 0;
+	list_t *env_l = NULL, *aux = NULL;
 
 	if (ENV == NULL)
 	{
@@ -15,11 +16,17 @@ void print_env(void)
 	}
 	else
 	{
-		for (i = 0; ENV[i]; i++)
+		env_l = env_list();
+		if (env_l == NULL)
+			return;
+		aux = env_l;
+		for (i = 0; aux; i++)
 		{
-			write(STDOUT_FILENO, ENV[i], _strlen(ENV[i]));
+			write(STDOUT_FILENO, aux->str, aux->len);
 			write(STDOUT_FILENO, "\n", 1);
+			aux = aux->next;
 		}
+		free_list(env_l);
 	}
 }
 /**
@@ -48,4 +55,20 @@ void _strenv(char *s1)
 		else if (s1[i] != 32 || s1[i] != 'e')
 			return;
 	}
+}
+/**
+ * env_list - function that split the environment variables in a list_t
+ *
+ * Return: a list with all the environment variables if any, NULL otherwise
+ */
+list_t *env_list(void)
+{
+	list_t *head = NULL;
+	int i = 0;
+
+	for (i = 0; ENV[i] != NULL; i++)
+	{
+		head = add_list(&head, ENV[i]);
+	}
+	return (head);
 }
