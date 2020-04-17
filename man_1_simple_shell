@@ -2,13 +2,12 @@
 .SH NAME
 .B simple_shell,
 - command interpreter (shell).
-.Sh SYNOPSIS             \" Section Header - required - don't modify
-.Op Fl abcd              \" [-abcd]
-.Op Fl a Ar path         \" [-a path]
-.Op Ar file              \" [file]
-.Op Ar                   \" [file ...]
-.Ar arg0                 \" Underlined argument - use .Ar anywhere to underline
-arg2 ...                 \" Arguments
+.SH SYNOPSIS
+
+ [+o option_name] [command_file [argument ...]] 
+ [+o option_name] command_string [command_name [argument ...]]
+ [+o option_name] [argument ...]
+
 .SH DESCRIPTION
 
 The simple shell program obtains commands provided by a user through Standard Input stream and attempts to execute them by
