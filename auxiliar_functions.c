@@ -27,7 +27,12 @@ int check_for_file(char *command)
 {
 	int stat_result = 1;
 	struct stat st;
+	char c = command[0];
 
+	if ((c > 47 && c < 58) || (c > 64 && c < 91) || (c > 96 && c < 123))
+	{
+		return (-1);
+	}
 	stat_result = stat(command, &st);
 	if (stat_result == 0)
 	{
