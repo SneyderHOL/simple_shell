@@ -51,6 +51,7 @@ int is_dot(char *line, ssize_t lineSize);
 /* Functions in env_handler.c file */
 void print_env(void);
 void _strenv(char *s1, int *status);
+list_t *env_list(void);
 /* Functions in exit_handler.c file */
 int valid_exit(char *str, size_t num_sequence, char *program_name,
 		int *status);

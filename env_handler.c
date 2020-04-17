@@ -12,6 +12,7 @@ void print_env(void)
 	{
 		write(STDOUT_FILENO, "nil", 3);
 		write(STDOUT_FILENO, "\n", 1);
+		return;
 	}
 	else
 	{
@@ -53,4 +54,20 @@ void _strenv(char *s1, int *status)
 		else if (s1[i] != 32 || s1[i] != 'e')
 			return;
 	}
+}
+/**
+ * env_list - function that split the environment variables in a list_t
+ *
+ * Return: a list with all the environment variables if any, NULL otherwise
+ */
+list_t *env_list(void)
+{
+	list_t *head = NULL;
+	int i = 0;
+
+	for (i = 0; ENV[i] != NULL; i++)
+	{
+		head = add_list(&head, ENV[i]);
+	}
+	return (head);
 }
