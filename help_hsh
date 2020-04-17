@@ -1,0 +1,44 @@
+simple_shell, - command interpreter (shell).
+
+SYNOPSIS
+        [+o option_name] [command_file [argument ...]]
+        [+o option_name] command_string [command_name [argument ...]]
+        [+o option_name] [argument ...]
+
+DESCRIPTION
+       The  simple  shell program obtains commands provided by a user through Standard Input stream and attempts to execute them by searching for corresponding built in functions in the
+       shell, or executables present in the operating system and defined in the environmental variable PATH.
+
+       When an error occurs, such as when a command is not found, or it is called with invalid options, a message is produced on the Standard Error stream, and an exit error  number  is
+       set accordingly.
+
+        Return (Exit Value)
+
+              Upon termination of the simple shell program, an exit value will be set according to the status of the last command executed. If the command ran succesfuly, the exit value
+              will be zero (0).
+
+              If an error was encounter, the values that can be set are:
+
+              2 - Errors with options like Illegal number
+
+              126 - Command invoked cannot execute
+
+              127 - command not found
+
+              130 - Control-C
+
+       FORMAT OF COMMAND INPUT
+
+              The simple shell can work in two different modes, interactive and non-interactive. In both modes, commands can be written with their absolute path  or  simply  their  exe‐
+              cutable name if they exist in one of the folders defined by PATH.
+
+              Example:
+
+              /bin/ls is the same as ls (ls exists in one of the PATH folders)
+
+       -Interactive
+
+              In  this condition, the shell will display a prompt ($) that will indicate that the user can provide commands by writing them with a keyboard. In order to execute the com‐
+              mands the user will need to press the enter key (new line).
+
+              Each time a command is executed, the prompt will reappear and wait for a new user input.

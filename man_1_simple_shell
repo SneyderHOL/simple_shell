@@ -139,7 +139,11 @@ Its use is fairly simple:
 with no options.
 
 
-($) help help
+($) help -help
+($) help -exit
+($) help -pwd
+($) help -cd
+($) help -hsh
 
 
 .RE

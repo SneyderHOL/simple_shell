@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <signal.h>
+#include <fcntl.h>
 #define ENV environ
 /* STRUCTS */
 /**
@@ -25,6 +26,16 @@ typedef struct list_s
 	unsigned int len;
 	struct list_s *next;
 } list_t;
+/**
+ * struct opc_help - struct of data type opc_help
+ * @array: Arguments for analyze and formatted
+ * @function_opc: Functions that print txt
+*/
+typedef struct opc_help
+{
+	char *array;
+	void (*function_opc)(char *opt, int *status);
+} input;
 /* PROTOTYPES  */
 /* Functions in auxiliar_functions.c file */
 int eof_validator(char *str);
@@ -39,7 +50,7 @@ int is_empty_string(char *line, ssize_t lineSize);
 int is_dot(char *line, ssize_t lineSize);
 /* Functions in env_handler.c file */
 void print_env(void);
-void _strenv(char *s1);
+void _strenv(char *s1, int *status);
 /* Functions in exit_handler.c file */
 int valid_exit(char *str, size_t num_sequence, char *program_name,
 		int *status);
@@ -110,4 +121,10 @@ int _putcharE(char c);
 /* Global variable that contains the environment variables */
 extern char **environ;
 int counter;
+/* Help function */
+void _help(char *option, int *status);
+void valid_opt_help(char *arg, int *status);
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
+char *_strstr2(char *haystack, char *needle);
 #endif /* SHELL */
